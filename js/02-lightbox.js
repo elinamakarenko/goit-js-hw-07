@@ -4,7 +4,7 @@ const galleryRef = document.querySelector('.gallery');
 galleryAdd(galleryItems);
 function galleryAdd (galleryArray) {
     const markup = galleryArray.map(image=>
-        `<li><a class="gallery__item" href="${image.original}.jpg">
+        `<li><a class="gallery__item" href="${image.original}">
         <img class="gallery__image" 
         src="${image.preview}" 
         alt="${image.description}" />

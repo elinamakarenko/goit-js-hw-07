@@ -17,35 +17,33 @@ function galleryAdd (galleryArray) {
 </div>`).join('');
 gallery.insertAdjacentHTML('beforeend', markup);
 }
-gallery.addEventListener('click', event=>
-{
-    event.preventDefault();
-    const currentElement = event.target;
-    const currentValue = currentElement.dataset.source;
-    if (!currentValue) return;
-   modalShow(currentValue);
-})
-
-function modalShow(currentValue) {
+gallery.addEventListener('click', onImgClick);
     const instance = basicLightbox.create(`
-    <img src="${currentValue}" width="100%" height="100%">
-`, 
+    <img class ="modal-img" src="">`, 
 {
     onShow: (instance) => {
-       window.addEventListener('keydown', event=>{
-        if (event.code === 'Escape') {
-            instance.close();
-          }
-       })
+       window.addEventListener('keydown', onEskClick);
     },
+  },
+  {
     onclose: (instance) => {
-       window.removeEventListener('keydown', event=>{
-        if (event.code === 'Escape') {
-            instance.close();
-          }
-       })
+       window.removeEventListener('keydown', onEskClick);
     }
 }
     );
-instance.show()
+function onImgClick(event){
+  event.preventDefault();
+  if (event.target.nodeName !== 'IMG') {
+           return;
+         }
+         instance.element().querySelector('.modal-img').src = 
+         event.target.dataset.source;
+         console.log(instance.element().querySelector('.modal-img').src);
+         instance.show();
+}
+function onEskClick(event){
+  if (event.key === 'Escape') {
+           instance.close();
+           return;
+         }
 }
